@@ -1,0 +1,23 @@
+{
+  "name": "flappy-bird-project-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jv7680/flappy-bird-react-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jv7680/flappy-bird-react-server/issues"
+  },
+  "homepage": "https://github.com/Jv7680/flappy-bird-react-server#readme",
+  "dependencies": {
+    "express": "4.18.2"
+  }
+}
