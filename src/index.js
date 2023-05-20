@@ -4,6 +4,7 @@ import express from 'express';
 const app = express()
 const port = 8080
 
+console.log(__dirname);
 // route home
 app.get('/', (req, res) => {
     res.send('HIHIHI!')
