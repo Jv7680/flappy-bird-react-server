@@ -9,9 +9,9 @@ const initWebRoute = (app: any) => {
     })
 
     // port used to listen, client will call api to this port
-    app.listen(8080, () => {
-        console.log(`App listening on port 8080`)
-    })
+    // app.listen(8080, () => {
+    //     console.log(`App listening on port 8080`)
+    // })
 
     app.use("/api/v1/auth", authRouter);
     app.use("/api/v1/user", userRouter);
