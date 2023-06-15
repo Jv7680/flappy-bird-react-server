@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,15 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthFunctions = void 0;
-const jwt = require('jsonwebtoken');
-const promisify = require('util').promisify;
-const sign = promisify(jwt.sign).bind(jwt);
-const verify = promisify(jwt.verify).bind(jwt);
+import jwt from "jsonwebtoken";
 const generateToken = (payload, secretSignature, tokenLife) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield sign({
+        return yield jwt.sign({
             payload,
         }, secretSignature, {
             algorithm: 'HS256',
@@ -25,32 +19,50 @@ const generateToken = (payload, secretSignature, tokenLife) => __awaiter(void 0,
     }
     catch (error) {
         console.log(`Error in generate access token:  + ${error}`);
-        return null;
+        return false;
     }
 });
 const verifyToken = (token, secretKey) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield verify(token, secretKey);
+        const accessTokenDecoded = yield jwt.verify(token, secretKey, {
+            ignoreExpiration: true,
+        });
+        if (accessTokenDecoded) {
+            return {
+                userName: accessTokenDecoded.payload.userName,
+                exp: accessTokenDecoded.exp,
+            };
+        }
+        return false;
     }
     catch (error) {
-        console.log(`Error in verify access token:  + ${error}`);
-        return null;
+        console.log("Error in verify access token", error);
+        return false;
     }
 });
 const decodeToken = (token, secretKey) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield verify(token, secretKey, {
+        return yield jwt.verify(token, secretKey, {
             ignoreExpiration: true,
         });
     }
     catch (error) {
         console.log(`Error in decode access token: ${error}`);
-        return null;
+        return false;
     }
 });
-exports.AuthFunctions = {
+const isTokenExpired = (exp) => __awaiter(void 0, void 0, void 0, function* () {
+    const currentTime = Date.now() / 1000;
+    if (exp <= currentTime) {
+        // token expired
+        return true;
+    }
+    return false;
+});
+export const AuthFunctions = {
     generateToken,
     verifyToken,
     decodeToken,
+    isTokenExpired,
 };
 //# sourceMappingURL=authFunctions.js.map
