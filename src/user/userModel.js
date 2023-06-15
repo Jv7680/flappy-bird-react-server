@@ -3,10 +3,10 @@ import bcrypt from "bcrypt";
 
 const TABLE_NAME = "users";
 
-const checkUserNameExist = async (userName: string) => {
+const checkUserNameExist = async (userName) => {
     try {
         let [userRows] = await pool.execute(`select * from ${TABLE_NAME} where userName = ?`, [userName]);
-        if ((userRows as any).length === 0) {
+        if ((userRows).length === 0) {
             return false;
         }
 
@@ -18,14 +18,14 @@ const checkUserNameExist = async (userName: string) => {
     }
 };
 
-const checkGmailExist = async (gmail: string) => {
+const checkGmailExist = async (gmail) => {
     try {
         let [userRows] = await pool.execute(`select * from ${TABLE_NAME} where gmail = ?`, [gmail]);
-        if ((userRows as any).length === 0) {
+        if ((userRows).length === 0) {
             return false;
         }
 
-        return (userRows as any)[0].userName;
+        return (userRows)[0].userName;
     }
     catch (error) {
         console.log("checkGmailExist error", error);
@@ -33,14 +33,14 @@ const checkGmailExist = async (gmail: string) => {
     }
 };
 
-const checkFullNameExist = async (fullName: string) => {
+const checkFullNameExist = async (fullName) => {
     try {
         let [userRows] = await pool.execute(`select * from ${TABLE_NAME} where fullName = ?`, [fullName]);
-        if ((userRows as any).length === 0) {
+        if ((userRows).length === 0) {
             return false;
         }
 
-        const foundItem = Array.from(userRows as any).find((item: any) => item.fullName === fullName);
+        const foundItem = Array.from(userRows).find((item) => item.fullName === fullName);
         if (foundItem) {
             return true;
         }
@@ -53,14 +53,14 @@ const checkFullNameExist = async (fullName: string) => {
     }
 };
 
-const getUser = async (userName: string) => {
+const getUser = async (userName) => {
     try {
         let [userRows] = await pool.execute(`select * from ${TABLE_NAME} where userName = ?`, [userName]);
-        if ((userRows as any).length === 0) {
+        if ((userRows).length === 0) {
             return false;
         }
 
-        return (userRows as any)[0];
+        return (userRows)[0];
     }
     catch (error) {
         console.log("getUser error", error);
@@ -71,11 +71,11 @@ const getUser = async (userName: string) => {
 const getRankList = async () => {
     try {
         let [rankList] = await pool.execute(`select fullName, bestScore from ${TABLE_NAME} order by bestScore desc`);
-        if ((rankList as any).length === 0) {
+        if ((rankList).length === 0) {
             return false;
         }
 
-        return (rankList as any);
+        return (rankList);
     }
     catch (error) {
         console.log("getRankList error", error);
@@ -83,7 +83,7 @@ const getRankList = async () => {
     }
 };
 
-const createUser = async (userData: any) => {
+const createUser = async (userData) => {
     try {
         await pool.execute(`insert into ${TABLE_NAME}(userName,password,fullName,gmail,accountType,bestScore,setting,refreshToken) values (?,?,?,?,?,?,?,?)`, Object.values(userData));
         return userData.userName;
@@ -94,7 +94,7 @@ const createUser = async (userData: any) => {
     }
 };
 
-let resetUserPassword = async (userName: string) => {
+let resetUserPassword = async (userName) => {
     try {
         const newPassword = generateRandomString();
         const hashPassword = bcrypt.hashSync(newPassword, 10);
@@ -124,7 +124,7 @@ let generateRandomString = () => {
     return randomString;
 };
 
-const updateUserDetail = async (userData: any) => {
+const updateUserDetail = async (userData) => {
     try {
         await pool.execute(`update ${TABLE_NAME} set fullName = ?, gmail = ? where userName = ?`, Object.values(userData));
         return true;
@@ -135,7 +135,7 @@ const updateUserDetail = async (userData: any) => {
     }
 };
 
-const updateUserPassword = async (userPasswordData: any) => {
+const updateUserPassword = async (userPasswordData) => {
     try {
         await pool.execute(`update ${TABLE_NAME} set password = ? where userName = ?`, Object.values(userPasswordData));
         return true;
@@ -146,7 +146,7 @@ const updateUserPassword = async (userPasswordData: any) => {
     }
 };
 
-const updateUserBestScore = async (userName: string, bestScore: number) => {
+const updateUserBestScore = async (userName, bestScore) => {
     try {
         await pool.execute(`update ${TABLE_NAME} set bestScore = ? where userName = ?`, [bestScore, userName]);
         return true;
@@ -156,7 +156,7 @@ const updateUserBestScore = async (userName: string, bestScore: number) => {
     }
 };
 
-const updateUserRefreshToken = async (userName: string, refreshToken: string) => {
+const updateUserRefreshToken = async (userName, refreshToken) => {
     try {
         await pool.execute(`update ${TABLE_NAME} set refreshToken = ? where userName = ?`, [refreshToken, userName]);
         return true;

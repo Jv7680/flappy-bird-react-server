@@ -21,7 +21,7 @@ myOAuth2Client.setCredentials({
     refresh_token: GOOGLE_MAILER_REFRESH_TOKEN,
 });
 
-let sendMail = async (req: any, res: any) => {
+let sendMail = async (req, res) => {
     try {
         // Lấy thông tin gửi lên từ client qua body
         const { toGmail, title, content, warning } = req.body
@@ -63,7 +63,7 @@ let sendMail = async (req: any, res: any) => {
                 refresh_token: GOOGLE_MAILER_REFRESH_TOKEN,
                 accessToken: myAccessToken
             },
-        } as any);
+        });
 
         // config sent object
         const mailOptions = {

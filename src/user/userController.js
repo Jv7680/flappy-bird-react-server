@@ -4,7 +4,7 @@ import { successCode } from "../utils/manageCode/successCode";
 import { errorCode } from "../utils/manageCode/errorCode";
 import bcrypt from "bcrypt";
 
-let getUserDetail = async (req: any, res: any) => {
+let getUserDetail = async (req, res) => {
     let userName = req.userName;
     let user = await UserModel.getUser(userName);
     if (!user) {
@@ -22,7 +22,7 @@ let getUserDetail = async (req: any, res: any) => {
     return res.status(200).json(generateResponeData(successCode.getProfileSuccess, data));
 };
 
-let getRankList = async (req: any, res: any) => {
+let getRankList = async (req, res) => {
     let rankList = await UserModel.getRankList();
     if (!rankList) {
         return res.status(400).json(generateResponeData(errorCode.getRankListFail));
@@ -32,11 +32,11 @@ let getRankList = async (req: any, res: any) => {
     return res.status(200).json(generateResponeData(successCode.getRankListSuccess, data));
 };
 
-let createUser = async (req: any, res: any) => {
+let createUser = async (req, res) => {
     res.send(`createUser`);
 };
 
-let updateUserDetail = async (req: any, res: any) => {
+let updateUserDetail = async (req, res) => {
     let userName = req.userName;
 
     // check fullName exist
@@ -67,7 +67,7 @@ let updateUserDetail = async (req: any, res: any) => {
     return res.status(200).json(generateResponeData(successCode.updateProfileSuccess, data));
 };
 
-let updateUserPassword = async (req: any, res: any) => {
+let updateUserPassword = async (req, res) => {
     const isPasswordValid = bcrypt.compareSync(req.body.currentPassword, req.password);
     if (!isPasswordValid) {
         return res.status(400).json(generateResponeData(errorCode.incorrectPassword));
@@ -83,7 +83,7 @@ let updateUserPassword = async (req: any, res: any) => {
     return res.status(200).json(generateResponeData(successCode.updatePasswordSuccess));
 };
 
-let updateUserBestScore = async (req: any, res: any) => {
+let updateUserBestScore = async (req, res) => {
     let userName = req.userName;
 
     let userBestScore = req.body.userBestScore;
@@ -99,11 +99,11 @@ let updateUserBestScore = async (req: any, res: any) => {
     return res.status(200).json(generateResponeData(successCode.updateBestScoreSuccess));
 };
 
-let deleteUser = async (req: any, res: any) => {
+let deleteUser = async (req, res) => {
     res.send(`deleteUser`);
 };
 
-let checkUserExits = async (req: any, res: any) => {
+let checkUserExits = async (req, res) => {
     let userName = req.params.userName;
     if (!userName) {
         return res.status(400).json(generateResponeData(errorCode.missingParamKey));

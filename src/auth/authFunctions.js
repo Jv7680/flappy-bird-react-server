@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const generateToken = async (payload: any, secretSignature: any, tokenLife: any) => {
+const generateToken = async (payload, secretSignature, tokenLife) => {
     try {
         return await jwt.sign(
             {
@@ -18,15 +18,15 @@ const generateToken = async (payload: any, secretSignature: any, tokenLife: any)
     }
 };
 
-const verifyToken = async (token: any, secretKey: any) => {
+const verifyToken = async (token, secretKey) => {
     try {
         const accessTokenDecoded = await jwt.verify(token, secretKey, {
             ignoreExpiration: true,
         });
         if (accessTokenDecoded) {
             return {
-                userName: (accessTokenDecoded as any).payload.userName,
-                exp: (accessTokenDecoded as any).exp,
+                userName: (accessTokenDecoded).payload.userName,
+                exp: (accessTokenDecoded).exp,
             };
         }
 
@@ -37,7 +37,7 @@ const verifyToken = async (token: any, secretKey: any) => {
     }
 };
 
-const decodeToken = async (token: any, secretKey: any) => {
+const decodeToken = async (token, secretKey) => {
     try {
         return await jwt.verify(token, secretKey, {
             ignoreExpiration: true,
@@ -48,7 +48,7 @@ const decodeToken = async (token: any, secretKey: any) => {
     }
 };
 
-const isTokenExpired = async (exp: number) => {
+const isTokenExpired = async (exp) => {
     const currentTime = Date.now() / 1000;
     if (exp <= currentTime) {
         // token expired

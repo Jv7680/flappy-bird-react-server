@@ -4,7 +4,7 @@ import { generateResponeData } from '../utils/functions';
 import { errorCode } from '../utils/manageCode/errorCode';
 import { successCode } from '../utils/manageCode/successCode';
 
-const isAuth = async (req: any, res: any, next: any) => {
+const isAuth = async (req, res, next) => {
     // get access token from header
     const accessTokenFromHeader = req.headers.authorization;
     if (!accessTokenFromHeader) {
