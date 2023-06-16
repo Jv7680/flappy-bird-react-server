@@ -33,6 +33,21 @@ const checkGmailExist = async (gmail) => {
     }
 };
 
+const checkGmailMatchWithUser = async (gmail, userName) => {
+    try {
+        let [userRows] = await pool.execute(`select * from ${TABLE_NAME} where gmail = ? and userName = ?`, [gmail, userName]);
+        if ((userRows).length === 0) {
+            return false;
+        }
+
+        return true;
+    }
+    catch (error) {
+        console.log("checkGmailExist error", error);
+        return false;
+    }
+};
+
 const checkFullNameExist = async (fullName) => {
     try {
         let [userRows] = await pool.execute(`select * from ${TABLE_NAME} where fullName = ?`, [fullName]);
@@ -170,6 +185,7 @@ export const UserModel = {
     checkUserNameExist,
     checkGmailExist,
     checkFullNameExist,
+    checkGmailMatchWithUser,
     getUser,
     getRankList,
     createUser,

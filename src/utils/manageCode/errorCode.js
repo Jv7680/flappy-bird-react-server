@@ -19,12 +19,12 @@ export const errorCode = {
     updateUserPasswordFail: generateCode(416, "Update user password fail"),
     updateUserBestScoreFail: generateCode(417, "Update user best score fail"),
     sendMailFail: generateCode(418, "Send mail fail"),
-    getMailTokenFail: generateCode(418, "Can not get mail token"),
     gmailNotFound: generateCode(419, "Gmail not found"),
     resetPasswordFail: generateCode(420, "Reset password fail"),
     gmailExisted: generateCode(421, "This gmail already used"),
     getRankListFail: generateCode(422, "Can not get rank list"),
     fullNameExisted: generateCode(423, "This fullname already used"),
     missingParamKey: generateCode(424, "Missing required param key"),
+    getMailTokenFail: generateCode(425, "Can not get mail token"),
 };
 

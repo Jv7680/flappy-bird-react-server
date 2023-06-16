@@ -45,9 +45,12 @@ let updateUserDetail = async (req, res) => {
         return res.status(400).json(generateResponeData(errorCode.fullNameExisted));
     }
 
+    // check gmail match with user
+    const gmailmatch = await UserModel.checkGmailMatchWithUser(req.body.gmail, userName);
+
     // check gmail exist
     const gmailExist = await UserModel.checkGmailExist(req.body.gmail);
-    if (gmailExist && req.body.gmail.length > 0) {
+    if (!gmailmatch && gmailExist && req.body.gmail.length > 0) {
         return res.status(400).json(generateResponeData(errorCode.gmailExisted));
     }
 
