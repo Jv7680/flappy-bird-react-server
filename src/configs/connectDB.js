@@ -8,10 +8,10 @@ import mysql from 'mysql2/promise';
 // })
 
 const pool = mysql.createPool({
-    host: 'us-cdbr-east-06.cleardb.net',
-    user: 'b03c08dd04090e',
-    database: 'heroku_2f64474ae5b76ab',
-    password: 'abde4c75'
+    host: 'aws-instance.cruo6qsyugvo.ap-southeast-2.rds.amazonaws.com',
+    user: 'tinadmin',
+    database: 'flappybird',
+    password: '123456789&'
 })
 
 export default pool;
